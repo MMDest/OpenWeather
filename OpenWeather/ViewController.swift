@@ -8,13 +8,25 @@
 
 import UIKit
 
+import MapKit
+
 class ViewController: UIViewController {
-
+    var locationManager = LocationManager()
+    @IBOutlet weak var sunriseLabel: UILabel!
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+      super.viewDidLoad()
+
     }
-
-
+    override func viewWillAppear(_ animated: Bool) {
+        
+        locationManager.startLocation { (coordinate) in
+            
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
 }
+
 

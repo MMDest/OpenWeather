@@ -13,6 +13,7 @@
 		4432E87724601A1A00F99A62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4432E87524601A1A00F99A62 /* Main.storyboard */; };
 		4432E87924601A1E00F99A62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4432E87824601A1E00F99A62 /* Assets.xcassets */; };
 		4432E87C24601A1E00F99A62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4432E87A24601A1E00F99A62 /* LaunchScreen.storyboard */; };
+		4432E8862460630500F99A62 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432E8852460630500F99A62 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4432E87824601A1E00F99A62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4432E87B24601A1E00F99A62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4432E87D24601A1E00F99A62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4432E8852460630500F99A62 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				4432E87824601A1E00F99A62 /* Assets.xcassets */,
 				4432E87A24601A1E00F99A62 /* LaunchScreen.storyboard */,
 				4432E87D24601A1E00F99A62 /* Info.plist */,
+				4432E8852460630500F99A62 /* LocationManager.swift */,
 			);
 			path = OpenWeather;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4432E8862460630500F99A62 /* LocationManager.swift in Sources */,
 				4432E87424601A1A00F99A62 /* ViewController.swift in Sources */,
 				4432E87024601A1A00F99A62 /* AppDelegate.swift in Sources */,
 				4432E87224601A1A00F99A62 /* SceneDelegate.swift in Sources */,
