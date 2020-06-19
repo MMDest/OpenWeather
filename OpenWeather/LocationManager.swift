@@ -8,12 +8,14 @@
 
 import Foundation
 import CoreLocation
+
+struct Coordinate {
+    var latitude: Double
+    var longtitude: Double
+}
+
 class LocationManager: NSObject, CLLocationManagerDelegate{
     
-    struct Coordinate {
-        var latitude: Double
-        var longtitude: Double
-    }
     var didUpdateLocation:((Coordinate)->Void)?
     
     let locationManager = CLLocationManager()
@@ -21,7 +23,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestAlwaysAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            print("Start updating")
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
@@ -29,9 +30,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         self.didUpdateLocation = didUpdateLocation
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue: CLLocationCoordinate2D = manager.location!.coordinate
         locationManager.stopUpdatingLocation()
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        let locValue: CLLocationCoordinate2D = manager.location!.coordinate
         didUpdateLocation?(Coordinate(latitude: locValue.latitude , longtitude: locValue.longitude))
         
     }
