@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var parametrsLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var weatherIconImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) 
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
                 self.temperatureLabel.text = dailyForecast.temperature
                 self.windLabel.text = dailyForecast.wind
                 self.parametrsLabel.text = dailyForecast.paramets
-//                self.backgroundImage.image = UIImage.init(named: dailyForecast.paramets)
+                self.weatherIconImage.load(url: URL(string: dailyForecast.imageUrl)!)
             }
         }
         

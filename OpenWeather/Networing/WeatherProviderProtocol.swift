@@ -20,6 +20,7 @@ struct DailyForecast {
     var wind:String
     var temperature:String
     var paramets:String
+    var imageUrl:String
 }
 struct hourlyWeather {
     var hour:String

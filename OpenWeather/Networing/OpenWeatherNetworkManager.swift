@@ -44,7 +44,8 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         let wind =	"Wind: \(dailyOpenWeather.wind.deg.direction) \(dailyOpenWeather.wind.speed) m/s"
         let temperature = "\(Int(dailyOpenWeather.main.temp)) ℃"
         let parametrs = dailyOpenWeather.weather[0].main
-        return DailyForecast(cityName: cityName,sunrise: sunrise, sunset: sunset, visibility: visibility, wind: wind, temperature: temperature, paramets: parametrs)
+        let imageURL = "http://openweathermap.org/img/wn/\(dailyOpenWeather.weather[0].icon)@4x.png"
+        return DailyForecast(cityName: cityName,sunrise: sunrise, sunset: sunset, visibility: visibility, wind: wind, temperature: temperature, paramets: parametrs, imageUrl: imageURL)
     }
     
 }
