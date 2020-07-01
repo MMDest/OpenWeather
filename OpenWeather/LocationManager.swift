@@ -29,12 +29,16 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         }
         self.didUpdateLocation = didUpdateLocation
     }
+    
+    
+    
+}
+
+extension LocationManager {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         let locValue: CLLocationCoordinate2D = manager.location!.coordinate
         didUpdateLocation?(Coordinate(latitude: locValue.latitude , longtitude: locValue.longitude))
         
     }
-    
-    
 }

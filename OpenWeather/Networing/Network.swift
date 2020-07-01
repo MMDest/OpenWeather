@@ -14,6 +14,7 @@ class Network {
             print("Error URL")
             return 
         }
+        print(url)
         URLSession.shared.dataTask(with: url) { (data, _, errorr) in
             guard let data = data else {
                 print("Error data")
