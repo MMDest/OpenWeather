@@ -6,11 +6,11 @@
 //  Copyright © 2020 MineDest. All rights reserved.
 //
 import Foundation
+import GooglePlaces
 
 // MARK: - CityListElement
-struct CityListElement: Codable {
-    let id: Int
-    let name, state, country: String
-    let coord: Coord
+struct CityListElement {
+    let name, fullName: String
+    let coord: CLLocationCoordinate2D
 }
 typealias CityList = [CityListElement]
