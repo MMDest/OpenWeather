@@ -17,8 +17,8 @@ struct Coordinate {
 class LocationManager: NSObject, CLLocationManagerDelegate{
     
     var didUpdateLocation:((Coordinate)->Void)?
-    
     let locationManager = CLLocationManager()
+    
     func startLocation(_ didUpdateLocation: @escaping (Coordinate)->Void){
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestAlwaysAuthorization()
@@ -29,12 +29,15 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         }
         self.didUpdateLocation = didUpdateLocation
     }
+
+}
+
+extension LocationManager {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         let locValue: CLLocationCoordinate2D = manager.location!.coordinate
         didUpdateLocation?(Coordinate(latitude: locValue.latitude , longtitude: locValue.longitude))
         
     }
-    
-    
 }
+

@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import GooglePlaces
 
-import MapKit
-
-class ViewController: UIViewController {
+// Warning: Додай пробіли між методами і різними типами змінних
+class MainViewController: UIViewController {
     var locationManager = LocationManager()
     var networkManager: WeatherProviderProtocol = OpenWeatherNetworkManager()
+    var cityCoordinate: Coordinate? = nil
+    var searchController = SearchController()
+    var cityList: CityList?
+    
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
@@ -21,45 +25,57 @@ class ViewController: UIViewController {
     @IBOutlet weak var parametrsLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var weatherIconImage: UIImageView!
-    lazy var searchBar = UISearchBar(frame: CGRect.zero)
-    lazy var leftBarItemLabel = UILabel(frame: .zero)
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBAction func showSearchBarAction(_ sender: Any) {
+        searchController = SearchController()
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.tintColor = .systemIndigo
+        searchController.delegat = self
+        self.present(searchController, animated: true, completion: nil)
+        
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.2)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.searchBar.showsCancelButton = true
-//        self.searchBar.barStyle = .black
-//        self.searchBar.searchTextField.textColor = .white
-//        self.searchBar.tintColor = .white
-//        self.searchBar.searchTextField.leftView?.tintColor = .white
-//        self.searchBar.searchTextField.textAlignment = .center
-//        self.navigationItem.titleView = searchBar
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) 
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.view.backgroundColor? = .black
-//        self.searchBar.searchTextField.addTarget(self, action: #selector(searchTextFieldIsEditing), for: .editingDidBegin)
-        locationManager.startLocation { (coorinate) in
-            self.networkManager.getDailyWeather(by: coorinate) { (dailyForecast) in
-                self.navigationItem.title = dailyForecast.cityName
-//                self.navigationItem.leftBarButtonItem?.title = dailyForecast.cityName
-//                self.navigationItem.leftBarButtonItem?.style = .plain
-//                self.navigationController?.title = dailyForecast.cityName
-//                self.navigationController?.navigationItem.leftBarButtonItem?.title = dailyForecast.cityName
-//                self.searchBar.text = dailyForecast.cityName
-                self.sunriseLabel.text = dailyForecast.sunrise
-                self.sunsetLabel.text = dailyForecast.sunset
-                self.visibilityLabel.text = dailyForecast.visibility
-                self.temperatureLabel.text = dailyForecast.temperature
-                self.windLabel.text = dailyForecast.wind
-                self.parametrsLabel.text = dailyForecast.paramets
-                self.weatherIconImage.load(url: URL(string: dailyForecast.imageUrl)!)
+            locationManager.startLocation { (coordinate) in
+                self.setLabelByCoordinate(coordinate: coordinate,city: "")
             }
-        }
-    
+
     }
-//    @objc func searchTextFieldIsEditing(){
-//
-//    }
-    override func viewWillAppear(_ animated: Bool) {
+    fileprivate func setLabelByCoordinate(coordinate:Coordinate, city: String){
+        self.networkManager.getDailyWeather(by: coordinate) { (dailyForecast) in
+            
+            
+            self.sunriseLabel.text = dailyForecast.sunrise
+            self.sunsetLabel.text = dailyForecast.sunset
+            self.visibilityLabel.text = dailyForecast.visibility
+            self.temperatureLabel.text = dailyForecast.temperature
+            self.windLabel.text = dailyForecast.wind
+            self.parametrsLabel.text = dailyForecast.paramets
+            guard let url = URL(string: dailyForecast.imageUrl) else {
+            return
+            }
+            self.weatherIconImage.load(url: url)
+            guard city == "" else {
+                self.navigationItem.title = city
+                return
+            }
+            self.navigationItem.title = dailyForecast.cityName
+        }
+    }
+    
+}
+extension MainViewController: BackToMainVCDelegat {
+
+    
+    func update(coordinate: Coordinate, city: String) {
+        self.setLabelByCoordinate(coordinate: coordinate,city: city)
+//        self.navigationItem.title = city
     }
 }
 
