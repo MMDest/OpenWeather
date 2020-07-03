@@ -83,6 +83,7 @@
 			children = (
 				4432E8852460630500F99A62 /* LocationManager.swift */,
 				4432E87324601A1A00F99A62 /* MainViewController.swift */,
+				4438B2F224AE0857006EE88F /* SearchController.swift */,
 				44E8111D24A8B3DF00DB4E59 /* Main.storyboard */,
 				4432E87824601A1E00F99A62 /* Assets.xcassets */,
 				4438950C246448BF00333A55 /* Model */,
@@ -92,7 +93,6 @@
 				4432E87D24601A1E00F99A62 /* Info.plist */,
 				44357814246305750090BFE2 /* Networing */,
 				449DD1D72465A25000EFF651 /* Extensions.swift */,
-				4438B2F224AE0857006EE88F /* SearchController.swift */,
 			);
 			path = OpenWeather;
 			sourceTree = "<group>";
