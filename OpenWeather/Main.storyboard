@@ -117,7 +117,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="S5T-A6-k1e">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="globe" catalog="system" id="D7c-Gc-V00"/>
+                            <barButtonItem title="Item" image="globe" catalog="system" id="D7c-Gc-V00">
+                                <connections>
+                                    <segue destination="jeS-9g-U15" kind="show" id="QKv-AY-RDz"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="search" id="EFA-Ad-JCL">
                                 <connections>
                                     <action selector="showSearchBarAction:" destination="anI-nE-y38" id="h87-aW-ix8"/>
@@ -140,6 +144,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sii-NJ-LVx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1381" y="1603"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="1AE-CI-Rve">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="jeS-9g-U15" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5fw-Gc-1vP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="B3c-gz-gXd"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="L0U-7S-626"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05g-vt-YM1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1381.1594202898552" y="2342.4107142857142"/>
         </scene>
         <!--Map-->
         <scene sceneID="dp7-fw-660">

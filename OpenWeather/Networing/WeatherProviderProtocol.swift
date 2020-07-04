@@ -10,6 +10,7 @@ import Foundation
 
 protocol WeatherProviderProtocol {
     func getDailyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
+    func getWeeklyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
 }
 struct DailyForecast {
     var cityName: String

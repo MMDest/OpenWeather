@@ -71,12 +71,12 @@ extension SearchController: UITableViewDelegate, UITableViewDataSource {
 }
 extension SearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        cityList = CityList()
         self.fetcher?.sourceTextHasChanged(searchText)
     }
 }
 extension SearchController: GMSAutocompleteFetcherDelegate {
     func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
+        cityList = CityList()
         placesClient = GMSPlacesClient()
         for prediction in predictions {
             guard let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.coordinate.rawValue) |
