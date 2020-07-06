@@ -18,6 +18,8 @@
 		4432E88A246074F000F99A62 /* OpenWeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432E889246074F000F99A62 /* OpenWeatherNetworkManager.swift */; };
 		4435780F2462F7C40090BFE2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4435780E2462F7C40090BFE2 /* Network.swift */; };
 		443578112462FAF90090BFE2 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443578102462FAF90090BFE2 /* NetworkError.swift */; };
+		4436452524B33E5D00A30A29 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4436452424B33E5D00A30A29 /* SettingViewController.swift */; };
+		4436452824B3783F00A30A29 /* HourlyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4436452724B3783F00A30A29 /* HourlyWeatherTableViewCell.swift */; };
 		4438B2F324AE0857006EE88F /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4438B2F224AE0857006EE88F /* SearchController.swift */; };
 		449D0BBC24A4FE9A00397B82 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D0BBB24A4FE9A00397B82 /* Cities.swift */; };
 		449DD1D82465A25000EFF651 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449DD1D72465A25000EFF651 /* Extensions.swift */; };
@@ -52,6 +54,8 @@
 		4432E889246074F000F99A62 /* OpenWeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherNetworkManager.swift; sourceTree = "<group>"; };
 		4435780E2462F7C40090BFE2 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		443578102462FAF90090BFE2 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		4436452424B33E5D00A30A29 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		4436452724B3783F00A30A29 /* HourlyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		4438B2F224AE0857006EE88F /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		449D0BBB24A4FE9A00397B82 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		449DD1D72465A25000EFF651 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 				4432E87D24601A1E00F99A62 /* Info.plist */,
 				44357814246305750090BFE2 /* Networing */,
 				449DD1D72465A25000EFF651 /* Extensions.swift */,
+				4436452424B33E5D00A30A29 /* SettingViewController.swift */,
+				4436452724B3783F00A30A29 /* HourlyWeatherTableViewCell.swift */,
 			);
 			path = OpenWeather;
 			sourceTree = "<group>";
@@ -285,8 +291,10 @@
 				4432E88A246074F000F99A62 /* OpenWeatherNetworkManager.swift in Sources */,
 				4432E8862460630500F99A62 /* LocationManager.swift in Sources */,
 				449DD1D82465A25000EFF651 /* Extensions.swift in Sources */,
+				4436452524B33E5D00A30A29 /* SettingViewController.swift in Sources */,
 				4432E87424601A1A00F99A62 /* MainViewController.swift in Sources */,
 				44CBACAB246094E3000DFEA2 /* WeatherProviderProtocol.swift in Sources */,
+				4436452824B3783F00A30A29 /* HourlyWeatherTableViewCell.swift in Sources */,
 				4432E87024601A1A00F99A62 /* AppDelegate.swift in Sources */,
 				449D0BBC24A4FE9A00397B82 /* Cities.swift in Sources */,
 				4438B2F324AE0857006EE88F /* SearchController.swift in Sources */,

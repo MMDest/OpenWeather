@@ -25,6 +25,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var weatherIconImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBAction func showSearchBarAction(_ sender: Any) {
         searchController = SearchController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -53,6 +54,7 @@ class MainViewController: UIViewController {
             guard let url = URL(string: dailyForecast.imageUrl) else {
             return
             }
+            self.activityIndicator.isHidden = true
             self.weatherIconImage.load(url: url)
             guard city == "" else {
                 self.navigationItem.title = city
@@ -64,6 +66,10 @@ class MainViewController: UIViewController {
 }
 extension MainViewController: BackToMainVCDelegat {
     func update(coordinate: Coordinate, city: String) {
+        self.activityIndicator.isHidden = true
         self.setLabelByCoordinate(coordinate: coordinate, city: city)
     }
+}
+extension MainViewController:UITableView {
+    
 }
