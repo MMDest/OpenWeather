@@ -8,7 +8,8 @@
 
 import Foundation
 
-enum NetworkError:Error {
+enum NetworkError: Error {
     case unknown
     case noJSONData
+    case failDecode
 }

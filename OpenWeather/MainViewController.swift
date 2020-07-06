@@ -13,10 +13,9 @@ import GooglePlaces
 class MainViewController: UIViewController {
     var locationManager = LocationManager()
     var networkManager: WeatherProviderProtocol = OpenWeatherNetworkManager()
-    var cityCoordinate: Coordinate? = nil
+    var cityCoordinate: Coordinate?
     var searchController = SearchController()
     var cityList: CityList?
-    
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
@@ -26,31 +25,26 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var weatherIconImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBAction func showSearchBarAction(_ sender: Any) {
         searchController = SearchController()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .systemIndigo
         searchController.delegat = self
         self.present(searchController, animated: true, completion: nil)
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.2)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
             locationManager.startLocation { (coordinate) in
-                self.setLabelByCoordinate(coordinate: coordinate,city: "")
+                self.setLabelByCoordinate(coordinate: coordinate, city: "")
             }
 
     }
-    fileprivate func setLabelByCoordinate(coordinate:Coordinate, city: String){
+    private func setLabelByCoordinate(coordinate: Coordinate, city: String) {
         self.networkManager.getDailyWeather(by: coordinate) { (dailyForecast) in
-            
-            
             self.sunriseLabel.text = dailyForecast.sunrise
             self.sunsetLabel.text = dailyForecast.sunset
             self.visibilityLabel.text = dailyForecast.visibility
@@ -60,6 +54,7 @@ class MainViewController: UIViewController {
             guard let url = URL(string: dailyForecast.imageUrl) else {
             return
             }
+            self.activityIndicator.isHidden = true
             self.weatherIconImage.load(url: url)
             guard city == "" else {
                 self.navigationItem.title = city
@@ -68,15 +63,13 @@ class MainViewController: UIViewController {
             self.navigationItem.title = dailyForecast.cityName
         }
     }
-    
 }
 extension MainViewController: BackToMainVCDelegat {
-
-    
     func update(coordinate: Coordinate, city: String) {
-        self.setLabelByCoordinate(coordinate: coordinate,city: city)
-//        self.navigationItem.title = city
+        self.activityIndicator.isHidden = true
+        self.setLabelByCoordinate(coordinate: coordinate, city: city)
     }
 }
-
-
+extension MainViewController:UITableView {
+    
+}

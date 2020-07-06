@@ -8,31 +8,46 @@
 
 import Foundation
 
-
 protocol WeatherProviderProtocol {
     func getDailyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
+    func getWeeklyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
 }
 struct DailyForecast {
-    var cityName:String
-    var sunrise:String
-    var sunset:String
-    var visibility:String
-    var wind:String
-    var temperature:String
-    var paramets:String
-    var imageUrl:String
+    var cityName: String
+    var sunrise: String
+    var sunset: String
+    var visibility: String
+    var wind: String
+    var temperature: String
+    var paramets: String
+    var imageUrl: String
 }
-struct hourlyWeather {
-    var hour:String
-    var main:String
-    var temperature:String
-    var imageUrl:String
+struct HourlyWeather {
+    var hour: String
+    var main: String
+    var temperature: String
+    var imageUrl: String
 }
 
-enum Direction: String, CaseIterable {
-    case n, nne, ne, ene, e, ese, se, sse, s, ssw, sw, wsw, w, wnw, nw, nnw
+enum Direction: String, CodingKey, CaseIterable {
+    case nDirection = "n"
+    case nneDirection = "nne"
+    case neDirection = "ne"
+    case eneDirection = "ene"
+    case eDirection = "e"
+    case eseDirection = "ese"
+    case seDirection = "se"
+    case sseDirection = "sse"
+    case sDirection = "s"
+    case sswDirection = "ssw"
+    case swDirection = "sw"
+    case wswDirection = "wsw"
+    case wDirection = "w"
+    case wnwDirection = "wnw"
+    case nwDirection = "nw"
+    case nnwDirection = "nnw"
 }
-extension Direction: CustomStringConvertible  {
+extension Direction: CustomStringConvertible {
     var description: String {
         return rawValue.uppercased()
     }

@@ -5,5 +5,6 @@ target 'OpenWeather' do
 
 	pod 'GoogleMaps'
 	pod 'GooglePlaces'
+  pod 'SwiftLint'
 
 end

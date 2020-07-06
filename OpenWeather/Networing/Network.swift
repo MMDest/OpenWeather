@@ -9,10 +9,11 @@
 import Foundation
 
 class Network {
-    func network<T: Decodable>(api:String, completion: @escaping (Result<T,Error>) -> ()){
+    func network<T: Decodable>( api: String, completion: @escaping (Result <T, Error>) -> Void) {
         guard let url = URL(string: api) else {
+            print(api)
             print("Error URL")
-            return 
+            return
         }
         print(url)
         URLSession.shared.dataTask(with: url) { (data, _, errorr) in
@@ -30,10 +31,9 @@ class Network {
                     let model = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(model))
                 return
-                
             } catch _ {
                 print(Error.self)
-                completion(.failure(NetworkError.unknown))
+                completion(.failure(NetworkError.failDecode))
                 return
             }
         }.resume()
