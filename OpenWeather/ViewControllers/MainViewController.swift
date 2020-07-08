@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     var cityCoordinate: Coordinate?
     var searchController = SearchViewController()
     var weekWeathers: [WeeklyWeatherForecast]?
+    var dayWeathers: [DailyWeatherForecast]?
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
@@ -25,7 +26,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var weatherIconImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var stackListView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBAction func showSearchBarAction(_ sender: Any) {
         searchController = SearchViewController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -35,11 +38,14 @@ class MainViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.2)
+        stackListView.backgroundColor = stackListView.backgroundColor?.withAlphaComponent(0.2)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
             locationManager.startLocation { (coordinate) in
                 self.setLabelByCoordinate(coordinate: coordinate, city: "")
             }
@@ -62,9 +68,10 @@ class MainViewController: UIViewController {
                 return
             }
             self.weekWeathers = dailyForecast.weekWeather
+            self.dayWeathers = dailyForecast.dailyWeather
             DispatchQueue.main.async {
+                self.collectionView.reloadData()
                 self.tableView.reloadData()
-//            self.navigationItem.title = self.locationManager.currentCity(coordinate: coordinate)
             }
         }
     }
@@ -90,8 +97,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let weekWeather = weekWeathers?[indexPath.row] else {
             return DailyWeatherTableViewCell()
         }
-        cell.maxTemperature.text = "\(weekWeather.maxTemperature)"
-        cell.minTemperature.text = "\(weekWeather.minTemperature)"
+        cell.maxTemperature.text = "\(weekWeather.maxTemperature)˚"
+        cell.minTemperature.text = "\(weekWeather.minTemperature)˚"
         cell.weekDay.text = weekWeather.weekDay
         guard let url = URL(string: weekWeather.weekImage) else {
         return cell
@@ -101,5 +108,30 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let count = dayWeathers?.count else {
+            return 0
+        }
+        return count
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dailyWeather",
+                                                            for: indexPath) as? HourlyWeatherCollectionViewCell else {
+            return HourlyWeatherCollectionViewCell()
+        }
+        guard let dailyWeather = dayWeathers?[indexPath.row] else {
+            return HourlyWeatherCollectionViewCell()
+        }
+        cell.hourLabel.text = dailyWeather.hour
+        cell.temperatureLabel.text = dailyWeather.hourTemp
+        guard let url = URL(string: dailyWeather.hourImage) else {
+        return cell
+        }
+        cell.weatherImageView.load(url: url)
+        return cell
     }
 }

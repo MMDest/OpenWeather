@@ -25,7 +25,7 @@ struct WeatherForecast {
 }
 
 struct DailyWeatherForecast {
-    var hourWeather: String
+    var hourTemp: String
     var hourImage: String
     var hour: String
 }
