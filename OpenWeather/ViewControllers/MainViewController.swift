@@ -14,8 +14,8 @@ class MainViewController: UIViewController {
     var locationManager = LocationManager()
     var networkManager: WeatherProviderProtocol = OpenWeatherNetworkManager()
     var cityCoordinate: Coordinate?
-    var searchController = SearchController()
-    var cityList: CityList?
+    var searchController = SearchViewController()
+    var weekWeathers: [WeeklyWeatherForecast]?
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBAction func showSearchBarAction(_ sender: Any) {
-        searchController = SearchController()
+        searchController = SearchViewController()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .systemIndigo
         searchController.delegat = self
@@ -38,13 +38,14 @@ class MainViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
             locationManager.startLocation { (coordinate) in
                 self.setLabelByCoordinate(coordinate: coordinate, city: "")
             }
-
     }
     private func setLabelByCoordinate(coordinate: Coordinate, city: String) {
-        self.networkManager.getDailyWeather(by: coordinate) { (dailyForecast) in
+        self.networkManager.getForecast(by: coordinate) { (dailyForecast) in
             self.sunriseLabel.text = dailyForecast.sunrise
             self.sunsetLabel.text = dailyForecast.sunset
             self.visibilityLabel.text = dailyForecast.visibility
@@ -60,7 +61,11 @@ class MainViewController: UIViewController {
                 self.navigationItem.title = city
                 return
             }
-            self.navigationItem.title = dailyForecast.cityName
+            self.weekWeathers = dailyForecast.weekWeather
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+//            self.navigationItem.title = self.locationManager.currentCity(coordinate: coordinate)
+            }
         }
     }
 }
@@ -70,6 +75,31 @@ extension MainViewController: BackToMainVCDelegat {
         self.setLabelByCoordinate(coordinate: coordinate, city: city)
     }
 }
-extension MainViewController:UITableView {
-    
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let count = weekWeathers?.count else {
+            return 0
+        }
+        return count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "dailyWeather",
+                                                       for: indexPath) as? DailyWeatherTableViewCell else {
+            return DailyWeatherTableViewCell()
+        }
+        guard let weekWeather = weekWeathers?[indexPath.row] else {
+            return DailyWeatherTableViewCell()
+        }
+        cell.maxTemperature.text = "\(weekWeather.maxTemperature)"
+        cell.minTemperature.text = "\(weekWeather.minTemperature)"
+        cell.weekDay.text = weekWeather.weekDay
+        guard let url = URL(string: weekWeather.weekImage) else {
+        return cell
+        }
+        cell.weatherImageView.load(url: url)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }

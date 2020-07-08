@@ -31,8 +31,8 @@ class Network {
                     let model = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(model))
                 return
-            } catch _ {
-                print(Error.self)
+            } catch {
+                print(error)
                 completion(.failure(NetworkError.failDecode))
                 return
             }

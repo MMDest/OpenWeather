@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         GMSServices.provideAPIKey("AIzaSyD0sACmmZWn63icM5jUQqIptxVK5KuDxKg")
         GMSPlacesClient.provideAPIKey("AIzaSyD0sACmmZWn63icM5jUQqIptxVK5KuDxKg")
-        UserDefaults.standard.set("imperial", forKey: "units")
+        UserDefaults.standard.set("metric", forKey: "units")
         return true
     }
 
