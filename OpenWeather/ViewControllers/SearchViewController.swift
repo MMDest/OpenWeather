@@ -9,7 +9,7 @@
 import UIKit
 import GooglePlaces
 
-class SearchController: UISearchController {
+class SearchViewController: UISearchController {
     var cityListTableView: UITableView?
     var locationManager = LocationManager()
     var fetcher: GMSAutocompleteFetcher?
@@ -43,7 +43,7 @@ class SearchController: UISearchController {
         self.view.addSubview(cityListTableView)
     }
 }
-extension SearchController: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cityList?.count ?? 0
     }
@@ -69,12 +69,12 @@ extension SearchController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
-extension SearchController: UISearchBarDelegate {
+extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.fetcher?.sourceTextHasChanged(searchText)
     }
 }
-extension SearchController: GMSAutocompleteFetcherDelegate {
+extension SearchViewController: GMSAutocompleteFetcherDelegate {
     func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
         cityList = CityList()
         placesClient = GMSPlacesClient()

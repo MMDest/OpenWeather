@@ -1,5 +1,5 @@
 //
-//  Extentions.swift
+//  ImageViewExtensions.swift
 //  OpenWeather
 //
 //  Created by MineDest on 5/8/20.

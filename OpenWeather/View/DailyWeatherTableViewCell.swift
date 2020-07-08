@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HourlyWeatherTableViewCell: UITableViewCell {
+class DailyWeatherTableViewCell: UITableViewCell {
 
     @IBOutlet weak var weekDay: UILabel!
     @IBOutlet weak var minTemperature: UILabel!
@@ -17,12 +17,13 @@ class HourlyWeatherTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        minTemperature.textColor = (minTemperature?.textColor)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.backgroundColor = .systemIndigo
-        // Configure the view for the selected state
+        self.backgroundColor = .clear
+
     }
 
 }

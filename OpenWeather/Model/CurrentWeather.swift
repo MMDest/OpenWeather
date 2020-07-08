@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - DailyOpenWeather
-struct DailyOpenWeather: Codable {
+struct CurrentWeather: Codable {
     let coord: Coord
     let weather: [Weather]
     let base: String

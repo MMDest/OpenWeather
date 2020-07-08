@@ -9,11 +9,10 @@
 import Foundation
 
 protocol WeatherProviderProtocol {
-    func getDailyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
-    func getWeeklyWeather(by coordinates: Coordinate, weather: @escaping (DailyForecast) -> Void)
+    func getForecast(by coordinates: Coordinate, weather: @escaping (WeatherForecast) -> Void)
 }
-struct DailyForecast {
-    var cityName: String
+struct WeatherForecast {
+//    var cityName: String
     var sunrise: String
     var sunset: String
     var visibility: String
@@ -21,12 +20,20 @@ struct DailyForecast {
     var temperature: String
     var paramets: String
     var imageUrl: String
+    var dailyWeather: [DailyWeatherForecast]
+    var weekWeather: [WeeklyWeatherForecast]
 }
-struct HourlyWeather {
+
+struct DailyWeatherForecast {
+    var hourWeather: String
+    var hourImage: String
     var hour: String
-    var main: String
-    var temperature: String
-    var imageUrl: String
+}
+struct WeeklyWeatherForecast {
+    var weekDay: String
+    var weekImage: String
+    var minTemperature: Int
+    var maxTemperature: Int
 }
 
 enum Direction: String, CodingKey, CaseIterable {

@@ -17,7 +17,8 @@ struct Coordinate {
 class LocationManager: NSObject, CLLocationManagerDelegate {
     var didUpdateLocation: ((Coordinate) -> Void)?
     let locationManager = CLLocationManager()
-
+    var city = ""
+    lazy var geocoder = CLGeocoder()
     func startLocation(_ didUpdateLocation: @escaping (Coordinate) -> Void) {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestAlwaysAuthorization()
@@ -27,6 +28,16 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
         self.didUpdateLocation = didUpdateLocation
+    }
+    func currentCity(coordinate: Coordinate) -> String {
+
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longtitude)
+            self.geocoder.reverseGeocodeLocation(location) { (placemarks, _) in
+            if let placemarks = placemarks, let placemark = placemarks.first {
+                self.city = placemark.locality!
+            }
+        }
+        return city
     }
 }
 
