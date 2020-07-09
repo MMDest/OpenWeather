@@ -12,4 +12,8 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        weatherImageView.image = nil
+    }
 }

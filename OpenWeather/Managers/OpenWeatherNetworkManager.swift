@@ -59,10 +59,13 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
             let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
             dateFormatter.dateFormat = "EEEE"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
-            let weakWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
+            var weekWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
                                                     weekImage: image, minTemperature: Int(weather.temp.min),
                                                     maxTemperature: Int(weather.temp.max))
-            weekWeathers.append(weakWeather)
+            if weather.date == weatherForecast.daily.first?.date {
+                weekWeather.weekDay = "Today"
+            }
+            weekWeathers.append(weekWeather)
         }
         var dailyWethers = [DailyWeatherForecast]()
         for weather in weatherForecast.hourly {
@@ -74,14 +77,10 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
             dailyWethers.append(dailyWeather)
         }
         return WeatherForecast(
-                             sunrise: sunrise,
-                             sunset: sunset,
-                             visibility: visibility,
-                             wind: wind,
-                             temperature: temperature,
-                             paramets: parametrs,
-                             imageUrl: imageURL,
-                             dailyWeather: dailyWethers,
+                             sunrise: sunrise, sunset: sunset,
+                             visibility: visibility, wind: wind,
+                             temperature: temperature, paramets: parametrs,
+                             imageUrl: imageURL, dailyWeather: dailyWethers,
                              weekWeather: weekWeathers)
     }
 }

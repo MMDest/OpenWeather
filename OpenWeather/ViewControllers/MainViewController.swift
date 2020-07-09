@@ -37,8 +37,8 @@ class MainViewController: UIViewController {
         self.present(searchController, animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
-        tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.2)
-        stackListView.backgroundColor = stackListView.backgroundColor?.withAlphaComponent(0.2)
+        tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
+        stackListView.backgroundColor = stackListView.backgroundColor?.withAlphaComponent(0.5)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +97,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let weekWeather = weekWeathers?[indexPath.row] else {
             return DailyWeatherTableViewCell()
         }
+// 
         cell.maxTemperature.text = "\(weekWeather.maxTemperature)˚"
         cell.minTemperature.text = "\(weekWeather.minTemperature)˚"
         cell.weekDay.text = weekWeather.weekDay
@@ -126,6 +127,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let dailyWeather = dayWeathers?[indexPath.row] else {
             return HourlyWeatherCollectionViewCell()
         }
+        cell.prepareForReuse()
         cell.hourLabel.text = dailyWeather.hour
         cell.temperatureLabel.text = dailyWeather.hourTemp
         guard let url = URL(string: dailyWeather.hourImage) else {
