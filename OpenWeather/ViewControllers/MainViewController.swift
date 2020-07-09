@@ -9,7 +9,6 @@
 import UIKit
 import GooglePlaces
 
-// Warning: Додай пробіли між методами і різними типами змінних
 class MainViewController: UIViewController {
     var locationManager = LocationManager()
     var networkManager: WeatherProviderProtocol = OpenWeatherNetworkManager()
@@ -38,7 +37,7 @@ class MainViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
-        stackListView.backgroundColor = stackListView.backgroundColor?.withAlphaComponent(0.5)
+        stackListView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +50,7 @@ class MainViewController: UIViewController {
             }
     }
     private func setLabelByCoordinate(coordinate: Coordinate, city: String) {
+
         self.networkManager.getForecast(by: coordinate) { (dailyForecast) in
             self.sunriseLabel.text = dailyForecast.sunrise
             self.sunsetLabel.text = dailyForecast.sunset
@@ -67,9 +67,9 @@ class MainViewController: UIViewController {
                 self.navigationItem.title = city
                 return
             }
-            self.weekWeathers = dailyForecast.weekWeather
-            self.dayWeathers = dailyForecast.dailyWeather
             DispatchQueue.main.async {
+                self.weekWeathers = dailyForecast.weekWeather
+                self.dayWeathers = dailyForecast.dailyWeather
                 self.collectionView.reloadData()
                 self.tableView.reloadData()
             }
@@ -97,7 +97,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let weekWeather = weekWeathers?[indexPath.row] else {
             return DailyWeatherTableViewCell()
         }
-// 
         cell.maxTemperature.text = "\(weekWeather.maxTemperature)˚"
         cell.minTemperature.text = "\(weekWeather.minTemperature)˚"
         cell.weekDay.text = weekWeather.weekDay

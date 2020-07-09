@@ -72,6 +72,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.fetcher?.sourceTextHasChanged(searchText)
+        cityListTableView?.reloadData()
     }
 }
 extension SearchViewController: GMSAutocompleteFetcherDelegate {
@@ -98,8 +99,10 @@ extension SearchViewController: GMSAutocompleteFetcherDelegate {
                     self.cityList?.append(CityListElement(name: place.name ?? "",
                                                           fullName: city,
                                                           coord: place.coordinate))
-                    self.cityListTableView?.reloadData()
                 }
+                                            DispatchQueue.main.async {
+                                                self.cityListTableView?.reloadData()
+                                            }
             })
         }
     }

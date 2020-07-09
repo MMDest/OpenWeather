@@ -1,4 +1,3 @@
-
 //
 //  Settins.swift
 //  OpenWeather
