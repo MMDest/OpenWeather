@@ -40,7 +40,6 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
     }
 
     func setForecast(weatherForecast: DailyForecast) -> WeatherForecast {
-//        let cityName = (dailyOpenWeather.current.)
         var date = Date(timeIntervalSince1970: TimeInterval(weatherForecast.current.sunrise))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
@@ -56,27 +55,32 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         let parametrs = weatherForecast.current.weather[0].main
         let imageURL = "http://openweathermap.org/img/wn/\(weatherForecast.current.weather[0].icon)@4x.png"
         var weekWeathers = [WeeklyWeatherForecast]()
-//        for dayWeather in
         for weather in weatherForecast.daily {
             let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
             dateFormatter.dateFormat = "EEEE"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
-            let weakWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
-                                                    weekImage: image,
-                                                    minTemperature: Int(weather.temp.min),
+            var weekWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
+                                                    weekImage: image, minTemperature: Int(weather.temp.min),
                                                     maxTemperature: Int(weather.temp.max))
-            weekWeathers.append(weakWeather)
+            if weather.date == weatherForecast.daily.first?.date {
+                weekWeather.weekDay = "Today"
+            }
+            weekWeathers.append(weekWeather)
         }
         var dailyWethers = [DailyWeatherForecast]()
+        for weather in weatherForecast.hourly {
+            dateFormatter.dateFormat = "HH"
+            date = Date(timeIntervalSince1970: TimeInterval(weather.date))
+            let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
+            let dailyWeather = DailyWeatherForecast(hourTemp: "\(Int(weather.temp))˚",
+                                                   hourImage: image, hour: dateFormatter.string(from: date))
+            dailyWethers.append(dailyWeather)
+        }
         return WeatherForecast(
-                             sunrise: sunrise,
-                             sunset: sunset,
-                             visibility: visibility,
-                             wind: wind,
-                             temperature: temperature,
-                             paramets: parametrs,
-                             imageUrl: imageURL,
-                             dailyWeather: dailyWethers,
+                             sunrise: sunrise, sunset: sunset,
+                             visibility: visibility, wind: wind,
+                             temperature: temperature, paramets: parametrs,
+                             imageUrl: imageURL, dailyWeather: dailyWethers,
                              weekWeather: weekWeathers)
     }
 }
