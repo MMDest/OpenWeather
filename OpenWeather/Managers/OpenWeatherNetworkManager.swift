@@ -13,9 +13,18 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
 
     var networkManager = Network()
     var locationManager = LocationManager()
+    var distanceUnits: Double {
+        switch UserDefaults.standard.string(forKey: "Distance") {
+        case "km":
+            return 1
+        case "mi":
+            return 0.09361
+        default:
+            return 0
+        }
+    }
 
     func getForecast(by coordinates: Coordinate, weather: @escaping (WeatherForecast) -> Void) {
-//        let units = "metric"
         guard let units = UserDefaults.standard.string(forKey: "units") else {
             return
         }
@@ -48,9 +57,12 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         let sunset = "Sunset: \(dateFormatter.string(from: date))"
         var visibility = ""
         if weatherForecast.current.visibility != nil {
-        visibility = "Visibility: \(weatherForecast.current.visibility!) m"
+        visibility = "Visibility: \(Double(weatherForecast.current.visibility!) * distanceUnits) m"
         }
-        let wind =	"Wind: \(weatherForecast.current.windDeg.direction) \(weatherForecast.current.windSpeed) m/s"
+        let wind =	"""
+            Wind: \(weatherForecast.current.windDeg.direction)\
+            \(weatherForecast.current.windSpeed * distanceUnits) m/s
+        """
         let temperature = "\(Int(weatherForecast.current.temp)) ℃"
         let parametrs = weatherForecast.current.weather[0].main
         let imageURL = "http://openweathermap.org/img/wn/\(weatherForecast.current.weather[0].icon)@4x.png"

@@ -46,7 +46,8 @@ class MainViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
             locationManager.startLocation { (coordinate) in
-                self.setLabelByCoordinate(coordinate: coordinate, city: "")
+                self.setLabelByCoordinate(coordinate: coordinate,
+                                          city: "")
             }
     }
     private func setLabelByCoordinate(coordinate: Coordinate, city: String) {
@@ -61,25 +62,24 @@ class MainViewController: UIViewController {
             guard let url = URL(string: dailyForecast.imageUrl) else {
             return
             }
+            self.weekWeathers = dailyForecast.weekWeather
+            self.dayWeathers = dailyForecast.dailyWeather
+            self.collectionView.reloadData()
+            self.tableView.reloadData()
             self.activityIndicator.isHidden = true
             self.weatherIconImage.load(url: url)
             guard city == "" else {
                 self.navigationItem.title = city
                 return
             }
-            DispatchQueue.main.async {
-                self.weekWeathers = dailyForecast.weekWeather
-                self.dayWeathers = dailyForecast.dailyWeather
-                self.collectionView.reloadData()
-                self.tableView.reloadData()
-            }
+
         }
     }
 }
 extension MainViewController: BackToMainVCDelegat {
     func update(coordinate: Coordinate, city: String) {
         self.activityIndicator.isHidden = true
-        self.setLabelByCoordinate(coordinate: coordinate, city: city)
+            self.setLabelByCoordinate(coordinate: coordinate, city: city)
     }
 }
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -126,7 +126,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let dailyWeather = dayWeathers?[indexPath.row] else {
             return HourlyWeatherCollectionViewCell()
         }
-        cell.prepareForReuse()
         cell.hourLabel.text = dailyWeather.hour
         cell.temperatureLabel.text = dailyWeather.hourTemp
         guard let url = URL(string: dailyWeather.hourImage) else {
