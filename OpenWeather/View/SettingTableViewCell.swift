@@ -12,10 +12,12 @@ class UnitsSettingTableViewCell: UITableViewCell {
 
     @IBOutlet weak var settingName: UILabel!
     @IBOutlet weak var settingControll: UISegmentedControl!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
+
     @IBAction func settingValueChanged(_ sender: UISegmentedControl) {
 
         if UnitsOptions.distance.description == settingName.text {
@@ -27,6 +29,7 @@ class UnitsSettingTableViewCell: UITableViewCell {
         }
 
     }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]

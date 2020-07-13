@@ -315,6 +315,7 @@
                         <outlet property="visibilityLabel" destination="1NM-fp-Ihw" id="uCp-2h-Pun"/>
                         <outlet property="weatherIconImage" destination="9Zw-yN-kwW" id="XRG-GO-GNs"/>
                         <outlet property="windLabel" destination="y59-8k-hdO" id="1Jr-Ge-PxX"/>
+                        <segue destination="fpk-cT-Ncn" kind="show" identifier="settinhSegue" id="bRA-AB-gOJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sii-NJ-LVx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -324,7 +325,7 @@
         <!--Setting View Controller-->
         <scene sceneID="mgY-qn-dey">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="fpk-cT-Ncn" customClass="SettingViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingViewController" hidesBottomBarWhenPushed="YES" id="fpk-cT-Ncn" customClass="SettingViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="grP-IY-vhB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -418,10 +419,11 @@
                             <outlet property="delegate" destination="fpk-cT-Ncn" id="G3v-xQ-nO0"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="Nzu-JY-4R8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xkp-eD-VEL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-717" y="2279"/>
+            <point key="canvasLocation" x="-1381" y="2273"/>
         </scene>
         <!--Map-->
         <scene sceneID="dp7-fw-660">
