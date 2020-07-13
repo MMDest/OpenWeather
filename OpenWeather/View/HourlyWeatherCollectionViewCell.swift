@@ -12,4 +12,13 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isHidden = false
+        isSelected = false
+        isHighlighted = false
+        hourLabel?.text = nil
+        weatherImageView?.image = nil
+        temperatureLabel?.text = nil
+    }
 }

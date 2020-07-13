@@ -35,8 +35,10 @@ class SearchViewController: UISearchController {
         self.view.backgroundColor = cityListTableView?.backgroundColor?.withAlphaComponent(0.7)
         cityListTableView?.backgroundColor = .clear
         cityListTableView?.rowHeight = 50
-        self.cityListTableView?.frame = CGRect.init(origin: CGPoint(x: .zero, y: searchBar.bounds.height + 5),
-                                                    size: self.view.frame.size)
+        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        self.cityListTableView?.frame = CGRect.init(origin: CGPoint(x: .zero,
+                                                                    y: searchBar.bounds.height + statusBarHeight),
+                                                                    size: self.view.frame.size)
         guard let cityListTableView = cityListTableView else {
             return
         }
@@ -51,7 +53,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let coordinate = Coordinate(latitude: cityList?[indexPath.row].coord.latitude ?? 0,
                                     longtitude: cityList?[indexPath.row].coord.longitude ?? 0)
         let city = cityList?[indexPath.row].name ?? ""
-        delegat?.update(coordinate: coordinate, city: city)
+        delegat?.updateByCoordinate(coordinate: coordinate, city: city)
         dismiss(animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -111,5 +113,6 @@ extension SearchViewController: GMSAutocompleteFetcherDelegate {
 }
 
 protocol BackToMainVCDelegat {
-    func update(coordinate: Coordinate, city: String)
+    func updateByCoordinate(coordinate: Coordinate, city: String)
+    func uppdate()
 }

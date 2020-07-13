@@ -16,10 +16,17 @@ class DailyWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var weatherImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-//        minTemperature.textColor = (minTemperature?.textColor)
     }
-
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isHidden = false
+        isSelected = false
+        isHighlighted = false
+        weekDay?.text = nil
+        weatherImageView?.image = nil
+        minTemperature?.text = nil
+        maxTemperature?.text = nil
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.backgroundColor = .clear

@@ -17,7 +17,7 @@ struct Coordinate {
 class LocationManager: NSObject, CLLocationManagerDelegate {
     var didUpdateLocation: ((Coordinate) -> Void)?
     let locationManager = CLLocationManager()
-    var city = ""
+//    var city = ""
     lazy var geocoder = CLGeocoder()
     func startLocation(_ didUpdateLocation: @escaping (Coordinate) -> Void) {
         self.locationManager.requestWhenInUseAuthorization()
@@ -29,22 +29,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         self.didUpdateLocation = didUpdateLocation
     }
-    func currentCity(coordinate: Coordinate) -> String {
-
-        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longtitude)
-            self.geocoder.reverseGeocodeLocation(location) { (placemarks, _) in
-            if let placemarks = placemarks, let placemark = placemarks.first {
-                self.city = placemark.locality!
-            }
-        }
-        return city
-    }
+//    func currentCity(coordinate: Coordinate) -> String {
+//
+//        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longtitude)
+//            self.geocoder.reverseGeocodeLocation(location) { (placemarks, _) in
+//            if let placemarks = placemarks, let placemark = placemarks.first {
+//                self.city = placemark.locality!
+//            }
+//        }
+//        return city
+//    }
 }
 
 extension LocationManager {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
-        let locValue: CLLocationCoordinate2D = manager.location!.coordinate
+        let locValue: CLLocationCoordinate2D = manager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0,
+                                                                                                      longitude: 0)
         didUpdateLocation?(Coordinate(latitude: locValue.latitude, longtitude: locValue.longitude))
     }
 }
