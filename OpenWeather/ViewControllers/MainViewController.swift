@@ -13,9 +13,11 @@ class MainViewController: UIViewController {
     var locationManager = LocationManager()
     var networkManager: WeatherProviderProtocol = OpenWeatherNetworkManager()
     var cityCoordinate: Coordinate?
+    var cityName: String?
     var searchController = SearchViewController()
     var weekWeathers: [WeeklyWeatherForecast]?
     var dayWeathers: [DailyWeatherForecast]?
+    var settingController = SettingViewController()
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
@@ -35,9 +37,12 @@ class MainViewController: UIViewController {
         searchController.delegat = self
         self.present(searchController, animated: true, completion: nil)
     }
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
-        stackListView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
+    @IBAction func showSettingViewController(_ sender: Any) {
+        settingController = SettingViewController()
+        settingController.delegat = self
+        self.navigationController?.pushViewController(settingController, animated: true)
+//        self.performSegue(withIdentifier: "showSettingVC", sender: nil)
+//        self.present(settingController, animated: true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +50,15 @@ class MainViewController: UIViewController {
         tableView.dataSource = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
+        stackListView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
             locationManager.startLocation { (coordinate) in
+                self.cityCoordinate = coordinate
                 self.setLabelByCoordinate(coordinate: coordinate,
                                           city: "")
             }
     }
+    // MARK: Set label by coordinate
     private func setLabelByCoordinate(coordinate: Coordinate, city: String) {
 
         self.networkManager.getForecast(by: coordinate) { (dailyForecast) in
@@ -76,9 +85,16 @@ class MainViewController: UIViewController {
         }
     }
 }
+// MARK: Delagate
 extension MainViewController: BackToMainVCDelegat {
-    func update(coordinate: Coordinate, city: String) {
+    func uppdate() {
+        self.setLabelByCoordinate(coordinate: cityCoordinate!, city: cityName ?? "")
+        print("HOLA")
+    }
+    func updateByCoordinate(coordinate: Coordinate, city: String) {
         self.activityIndicator.isHidden = true
+            self.cityCoordinate = coordinate
+            self.cityName = city
             self.setLabelByCoordinate(coordinate: coordinate, city: city)
     }
 }

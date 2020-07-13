@@ -44,7 +44,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 extension LocationManager {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
-        let locValue: CLLocationCoordinate2D = manager.location!.coordinate
+        let locValue: CLLocationCoordinate2D = manager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0,
+                                                                                                      longitude: 0)
         didUpdateLocation?(Coordinate(latitude: locValue.latitude, longtitude: locValue.longitude))
     }
 }

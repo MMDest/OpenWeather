@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set("metric", forKey: "units")
         UserDefaults.standard.set("km", forKey: "Distance")
         UserDefaults.standard.set("˚C", forKey: "Temperature")
+        UserDefaults.standard.set("English", forKey: "Language")
         return true
     }
 

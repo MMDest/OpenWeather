@@ -48,7 +48,7 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         }
     }
 
-    func setForecast(weatherForecast: DailyForecast) -> WeatherForecast {
+    func setForecast(weatherForecast: DailyForecast) -> WeatherForecast {// swiftlint:disable:this function_body_length
         var date = Date(timeIntervalSince1970: TimeInterval(weatherForecast.current.sunrise))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
@@ -71,22 +71,33 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
             let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
             dateFormatter.dateFormat = "EEEE"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
-            var weekWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
+            let weekWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
                                                     weekImage: image, minTemperature: Int(weather.temp.min),
                                                     maxTemperature: Int(weather.temp.max))
-            if weather.date == weatherForecast.daily.first?.date {
-                weekWeather.weekDay = "Today"
-            }
+//            if weather.date == weatherForecast.daily.first?.date {
+//                weekWeather.weekDay = "Today"
+//            }
             weekWeathers.append(weekWeather)
         }
         var dailyWethers = [DailyWeatherForecast]()
+        var countWeatherForecast = 0
         for weather in weatherForecast.hourly {
             dateFormatter.dateFormat = "HH"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
             let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
-            let dailyWeather = DailyWeatherForecast(hourTemp: "\(Int(weather.temp))˚",
+            var dailyWeather = DailyWeatherForecast(hourTemp: "\(Int(weather.temp))˚",
                                                    hourImage: image, hour: dateFormatter.string(from: date))
+            if dailyWeather.hour == "00" {
+                dailyWeather.hour = "Tomorrow"
+            }
+            if weather.date == weatherForecast.hourly.first?.date {
+                            dailyWeather.hour = "Now"
+            }
             dailyWethers.append(dailyWeather)
+            if countWeatherForecast == 23 {
+                break
+            }
+            countWeatherForecast += 1
         }
         return WeatherForecast(
                              sunrise: sunrise, sunset: sunset,

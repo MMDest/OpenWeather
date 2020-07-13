@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingTableViewCell: UITableViewCell {
+class UnitsSettingTableViewCell: UITableViewCell {
 
     @IBOutlet weak var settingName: UILabel!
     @IBOutlet weak var settingControll: UISegmentedControl!

@@ -60,4 +60,10 @@ enum GeneralOptions: Int, CaseIterable, CustomStringConvertible {
             return "Language"
         }
     }
+    var languages: [String] {
+        switch self {
+        case .language:
+            return ["English", "Ukrainian"]
+        }
+    }
 }
