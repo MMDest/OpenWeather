@@ -26,9 +26,9 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
     func speedUnits(speed: Double) -> String {
         switch UserDefaults.standard.string(forKey: "Distance") {
         case "km":
-            return "\(round(speed/0.1)*0.1) m/s"
+            return "\(round(speed*100)/100) m/s"
         case "mi":
-            return "\(round(((speed * 2.236936)/0.1)*0.1)) m/s"
+            return "\(round((speed * 2.236936)*100)/100) mph"
         default:
             return ""
         }
@@ -36,7 +36,7 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
     func temperatureUnits(celsium: Double) -> Double {
         switch UserDefaults.standard.string(forKey: "Temperature") {
         case "˚C":
-            return 1 * celsium
+            return celsium
         case "˚F":
             return (celsium * 1.8) + 32
         case "˚K":
@@ -80,7 +80,8 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         var visibility = ""
         if weatherForecast.current.visibility != nil {
             let distanceUnit = UserDefaults.standard.string(forKey: "Distance") ?? ""
-        visibility = "Visibility: \(Double(weatherForecast.current.visibility!) * distanceUnits) \(distanceUnit)"
+            let distance = round((weatherForecast.current.visibility!) * distanceUnits * 100) / 100
+            visibility = "Visibility: \(distance) \(distanceUnit)"
         }
         let speedUnit = speedUnits(speed: weatherForecast.current.windSpeed)
         let wind =	"""

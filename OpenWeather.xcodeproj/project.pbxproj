@@ -16,6 +16,7 @@
 		4432E87C24601A1E00F99A62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4432E87A24601A1E00F99A62 /* LaunchScreen.storyboard */; };
 		4432E8862460630500F99A62 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432E8852460630500F99A62 /* LocationManager.swift */; };
 		4432E88A246074F000F99A62 /* OpenWeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432E889246074F000F99A62 /* OpenWeatherNetworkManager.swift */; };
+		443415FC24BDA53C00958301 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443415FB24BDA53C00958301 /* MapViewController.swift */; };
 		4435780F2462F7C40090BFE2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4435780E2462F7C40090BFE2 /* Network.swift */; };
 		443578112462FAF90090BFE2 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443578102462FAF90090BFE2 /* NetworkError.swift */; };
 		4436452824B3783F00A30A29 /* DailyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4436452724B3783F00A30A29 /* DailyWeatherTableViewCell.swift */; };
@@ -56,6 +57,7 @@
 		4432E87D24601A1E00F99A62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4432E8852460630500F99A62 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4432E889246074F000F99A62 /* OpenWeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherNetworkManager.swift; sourceTree = "<group>"; };
+		443415FB24BDA53C00958301 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4435780E2462F7C40090BFE2 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		443578102462FAF90090BFE2 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4436452724B3783F00A30A29 /* DailyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableViewCell.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				4438B2F224AE0857006EE88F /* SearchViewController.swift */,
 				4432E87324601A1A00F99A62 /* MainViewController.swift */,
 				44DF622E24BC8A8500B65D53 /* LanguagesTableViewController.swift */,
+				443415FB24BDA53C00958301 /* MapViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				4432E87424601A1A00F99A62 /* MainViewController.swift in Sources */,
 				44CBACAB246094E3000DFEA2 /* WeatherProviderProtocol.swift in Sources */,
 				4436705124B73251008D130F /* SettingTableViewCell.swift in Sources */,
+				443415FC24BDA53C00958301 /* MapViewController.swift in Sources */,
 				4436452824B3783F00A30A29 /* DailyWeatherTableViewCell.swift in Sources */,
 				4432E87024601A1A00F99A62 /* AppDelegate.swift in Sources */,
 				443A8E2224B74BB500F6147C /* Setting.swift in Sources */,

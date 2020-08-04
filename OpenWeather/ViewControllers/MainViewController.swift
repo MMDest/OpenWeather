@@ -60,7 +60,17 @@ class MainViewController: UIViewController {
                 self.cityCoordinate = coordinate
                 self.setLabelByCoordinate(coordinate: coordinate,
                                           city: "")
+                self.locationManager.stopUpdateLocation()
             }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        guard let cordinate = cityCoordinate else {
+            return
+        }
+        self.setLabelByCoordinate(coordinate: cordinate, city: "")
+        DispatchQueue.main.async {
+            self.navigationItem.title = self.locationManager.currentCity(coordinate: self.cityCoordinate!)
+        }
     }
 
     // MARK: Set label by coordinate
@@ -97,10 +107,11 @@ extension MainViewController: BackToMainVCDelegat {
     }
 
     func updateByCoordinate(coordinate: Coordinate, city: String) {
-        self.activityIndicator.isHidden = true
+        self.activityIndicator.isHidden = false
             self.cityCoordinate = coordinate
             self.cityName = city
             self.setLabelByCoordinate(coordinate: coordinate, city: city)
+        self.tabBarController?.selectedIndex = 0
     }
 }
 // MARK: TableView setting
