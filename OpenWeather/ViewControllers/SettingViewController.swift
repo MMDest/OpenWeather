@@ -8,17 +8,21 @@
 import UIKit
 
 class SettingViewController: UITableViewController {
+
     var delegat: BackToMainVCDelegat?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Setting"
         tableView.delegate = self
         tableView.dataSource = self
-
+        tableView.tableFooterView = UIView()
     }
+
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         delegat?.uppdate()
     }
@@ -38,6 +42,7 @@ class SettingViewController: UITableViewController {
             return UnitsOptions.allCases.count
         }
     }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          guard let section = SettingType(rawValue: indexPath.section) else { return }
                switch section {
@@ -47,18 +52,42 @@ class SettingViewController: UITableViewController {
                case .units:
                    return
                case .more:
+                guard let more = MoreOptions(rawValue: indexPath.row) else {
+                    return
+                }
+                switch more {
+                case .aboutUs:
+                    let alert = UIAlertController(title: "About us",
+                                                  message: """
+                                            This weather app
+                                            create by Andriy Boyko
+                                            Copyright © 2020
+                                            """,
+                                                  preferredStyle: .alert)
+                    let openGit  = UIAlertAction(title: "Open GitHub", style: .default) { (_) in
+                        if let url = URL(string: "https://github.com/MMDest") {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                    let okButton  = UIAlertAction(title: "OK", style: .default)
+                    alert.addAction(openGit)
+                    alert.addAction(okButton)
+                    self.present(alert, animated: true, completion: nil)
+                }
                    return
                }
     }
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let section = SettingType(rawValue: section) else { return ""}
         return section.description
     }
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("asd")
         guard let section = SettingType(rawValue: indexPath.section) else { return UITableViewCell()}
         switch section {
         case .general:
@@ -85,5 +114,4 @@ class SettingViewController: UITableViewController {
             return cell ?? UITableViewCell()
         }
     }
-
 }

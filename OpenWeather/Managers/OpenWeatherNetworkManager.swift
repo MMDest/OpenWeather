@@ -16,9 +16,31 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
     var distanceUnits: Double {
         switch UserDefaults.standard.string(forKey: "Distance") {
         case "km":
-            return 1
+            return 0.001
         case "mi":
-            return 0.09361
+            return 0.00062137
+        default:
+            return 0
+        }
+    }
+    func speedUnits(speed: Double) -> String {
+        switch UserDefaults.standard.string(forKey: "Distance") {
+        case "km":
+            return "\(round(speed*100)/100) m/s"
+        case "mi":
+            return "\(round((speed * 2.236936)*100)/100) mph"
+        default:
+            return ""
+        }
+    }
+    func temperatureUnits(celsium: Double) -> Double {
+        switch UserDefaults.standard.string(forKey: "Temperature") {
+        case "˚C":
+            return celsium
+        case "˚F":
+            return (celsium * 1.8) + 32
+        case "˚K":
+            return celsium + 273.15
         default:
             return 0
         }
@@ -57,13 +79,17 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
         let sunset = "Sunset: \(dateFormatter.string(from: date))"
         var visibility = ""
         if weatherForecast.current.visibility != nil {
-        visibility = "Visibility: \(Double(weatherForecast.current.visibility!) * distanceUnits) m"
+            let distanceUnit = UserDefaults.standard.string(forKey: "Distance") ?? ""
+            let distance = round((weatherForecast.current.visibility!) * distanceUnits * 100) / 100
+            visibility = "Visibility: \(distance) \(distanceUnit)"
         }
+        let speedUnit = speedUnits(speed: weatherForecast.current.windSpeed)
         let wind =	"""
-            Wind: \(weatherForecast.current.windDeg.direction)\
-            \(weatherForecast.current.windSpeed * distanceUnits) m/s
+        Wind: \(weatherForecast.current.windDeg.direction) \
+        \(speedUnit)
         """
-        let temperature = "\(Int(weatherForecast.current.temp)) ℃"
+        let tempUnits = UserDefaults.standard.string(forKey: "Temperature")
+        let temperature = "\(Int(temperatureUnits(celsium: weatherForecast.current.temp))) \(tempUnits ?? "")"
         let parametrs = weatherForecast.current.weather[0].main
         let imageURL = "http://openweathermap.org/img/wn/\(weatherForecast.current.weather[0].icon)@4x.png"
         var weekWeathers = [WeeklyWeatherForecast]()
@@ -72,11 +98,9 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
             dateFormatter.dateFormat = "EEEE"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
             let weekWeather = WeeklyWeatherForecast(weekDay: dateFormatter.string(from: date),
-                                                    weekImage: image, minTemperature: Int(weather.temp.min),
-                                                    maxTemperature: Int(weather.temp.max))
-//            if weather.date == weatherForecast.daily.first?.date {
-//                weekWeather.weekDay = "Today"
-//            }
+                                                    weekImage: image,
+                                                    minTemperature: Int(temperatureUnits(celsium: weather.temp.min)),
+                                                    maxTemperature: Int(temperatureUnits(celsium: weather.temp.max)))
             weekWeathers.append(weekWeather)
         }
         var dailyWethers = [DailyWeatherForecast]()
@@ -85,11 +109,12 @@ class OpenWeatherNetworkManager: WeatherProviderProtocol {
             dateFormatter.dateFormat = "HH"
             date = Date(timeIntervalSince1970: TimeInterval(weather.date))
             let image = "http://openweathermap.org/img/wn/\(weather.weather[0].icon)@4x.png"
-            var dailyWeather = DailyWeatherForecast(hourTemp: "\(Int(weather.temp))˚",
-                                                   hourImage: image, hour: dateFormatter.string(from: date))
-            if dailyWeather.hour == "00" {
-                dailyWeather.hour = "Tomorrow"
-            }
+            var dailyWeather = DailyWeatherForecast(hourTemp: "\(Int(temperatureUnits(celsium: weather.temp)))˚",
+                                                   hourImage: image,
+                                                   hour: dateFormatter.string(from: date))
+//            if dailyWeather.hour == "00" {
+//                dailyWeather.hour = "Tomorrow"
+//            }
             if weather.date == weatherForecast.hourly.first?.date {
                             dailyWeather.hour = "Now"
             }

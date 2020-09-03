@@ -19,9 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyD0sACmmZWn63icM5jUQqIptxVK5KuDxKg")
         GMSPlacesClient.provideAPIKey("AIzaSyD0sACmmZWn63icM5jUQqIptxVK5KuDxKg")
         UserDefaults.standard.set("metric", forKey: "units")
-        UserDefaults.standard.set("km", forKey: "Distance")
-        UserDefaults.standard.set("˚C", forKey: "Temperature")
-        UserDefaults.standard.set("English", forKey: "Language")
+        let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool
+        if !firstRun {
+            UserDefaults.standard.set("km", forKey: "Distance")
+            UserDefaults.standard.set(true, forKey: "firstRun")
+            UserDefaults.standard.set("˚C", forKey: "Temperature")
+            UserDefaults.standard.set("English", forKey: "Language")
+        }
         return true
     }
 

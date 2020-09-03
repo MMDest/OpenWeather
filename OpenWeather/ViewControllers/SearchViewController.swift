@@ -10,6 +10,7 @@ import UIKit
 import GooglePlaces
 
 class SearchViewController: UISearchController {
+
     var cityListTableView: UITableView?
     var locationManager = LocationManager()
     var fetcher: GMSAutocompleteFetcher?
@@ -30,25 +31,30 @@ class SearchViewController: UISearchController {
         self.fetcher?.delegate = self
         self.fetcher?.provide(token)
     }
+
     func showTableView() {
         cityListTableView = UITableView(frame: .zero, style: .plain)
         self.view.backgroundColor = cityListTableView?.backgroundColor?.withAlphaComponent(0.7)
         cityListTableView?.backgroundColor = .clear
         cityListTableView?.rowHeight = 50
-        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         self.cityListTableView?.frame = CGRect.init(origin: CGPoint(x: .zero,
-                                                                    y: searchBar.bounds.height + statusBarHeight),
-                                                                    size: self.view.frame.size)
+                                                                    y: searchBar.frame.maxY),
+                                                    size: self.view.bounds.size)
         guard let cityListTableView = cityListTableView else {
             return
         }
         self.view.addSubview(cityListTableView)
     }
 }
+
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.frame = CGRect.init(origin: CGPoint(x: .zero,
+        y: searchBar.frame.maxY),
+        size: self.view.frame.size)
         return cityList?.count ?? 0
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let coordinate = Coordinate(latitude: cityList?[indexPath.row].coord.latitude ?? 0,
                                     longtitude: cityList?[indexPath.row].coord.longitude ?? 0)
@@ -56,9 +62,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         delegat?.updateByCoordinate(coordinate: coordinate, city: city)
         dismiss(animated: true, completion: nil)
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "City")
         cell.backgroundColor = .clear
@@ -71,13 +79,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.fetcher?.sourceTextHasChanged(searchText)
         cityListTableView?.reloadData()
     }
 }
+
 extension SearchViewController: GMSAutocompleteFetcherDelegate {
+
     func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
         cityList = CityList()
         placesClient = GMSPlacesClient()
@@ -108,6 +119,7 @@ extension SearchViewController: GMSAutocompleteFetcherDelegate {
             })
         }
     }
+
     func didFailAutocompleteWithError(_ error: Error) {
     }
 }
