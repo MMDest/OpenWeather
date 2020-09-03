@@ -54,8 +54,15 @@ class MainViewController: UIViewController {
         tableView.dataSource = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
         tableView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
         stackListView.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
+        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let height = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        backgroundImage.topAnchor.constraint(equalTo: view.topAnchor, constant: height).isActive = true
+        self.navigationController?.navigationBar.backgroundColor = tableView.backgroundColor?.withAlphaComponent(0.5)
             locationManager.startLocation { (coordinate) in
                 self.cityCoordinate = coordinate
                 self.setLabelByCoordinate(coordinate: coordinate,
@@ -68,9 +75,9 @@ class MainViewController: UIViewController {
             return
         }
         self.setLabelByCoordinate(coordinate: cordinate, city: "")
-        DispatchQueue.main.async {
-            self.navigationItem.title = self.locationManager.currentCity(coordinate: self.cityCoordinate!)
-        }
+//        DispatchQueue.main.async {
+//            self.navigationItem.title = self.locationManager.currentCity(coordinate: self.cityCoordinate!)
+//        }
     }
 
     // MARK: Set label by coordinate
@@ -111,7 +118,7 @@ extension MainViewController: BackToMainVCDelegat {
             self.cityCoordinate = coordinate
             self.cityName = city
             self.setLabelByCoordinate(coordinate: coordinate, city: city)
-        self.tabBarController?.selectedIndex = 0
+//        self.tabBarController?.selectedIndex = 0
     }
 }
 // MARK: TableView setting

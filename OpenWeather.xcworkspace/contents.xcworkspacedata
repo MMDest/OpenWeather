@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/mdest/Desktop/OpenWeather/OpenWeather/ViewControllers/SettingViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:OpenWeather.xcodeproj">
    </FileRef>
    <FileRef

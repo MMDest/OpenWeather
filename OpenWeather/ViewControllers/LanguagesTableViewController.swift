@@ -24,6 +24,11 @@ class LanguagesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = GeneralOptions.language.languages[indexPath.row]
+        guard cell.textLabel?.text !=  UserDefaults.standard.string(forKey: "Language") else {
+//            cell.isSelected = true
+            cell.accessoryType = .checkmark
+            return cell
+        }
         return cell
     }
 

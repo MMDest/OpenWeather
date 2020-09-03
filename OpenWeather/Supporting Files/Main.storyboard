@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DayClearSky" translatesAutoresizingMaskIntoConstraints="NO" id="hjf-uR-ayv">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clouds" translatesAutoresizingMaskIntoConstraints="NO" id="hjf-uR-ayv">
+                                <rect key="frame" x="0.0" y="-583" width="375" height="1250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RVl-rM-N7f">
@@ -268,7 +268,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="uXf-e4-PHJ" firstAttribute="top" secondItem="Uwc-ve-6fe" secondAttribute="top" id="4mh-9K-8hj"/>
-                            <constraint firstItem="hjf-uR-ayv" firstAttribute="top" secondItem="0T7-V2-4YU" secondAttribute="top" id="8kv-Ut-o1r"/>
                             <constraint firstItem="qX6-kK-eCE" firstAttribute="top" secondItem="uXf-e4-PHJ" secondAttribute="bottom" id="CRH-ZW-auR"/>
                             <constraint firstItem="uXf-e4-PHJ" firstAttribute="leading" secondItem="Uwc-ve-6fe" secondAttribute="leading" id="HSQ-Pd-4jI"/>
                             <constraint firstAttribute="trailing" secondItem="RVl-rM-N7f" secondAttribute="trailing" id="Hcl-zu-5sU"/>
@@ -320,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sii-NJ-LVx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1381.1594202898552" y="1602.4553571428571"/>
+            <point key="canvasLocation" x="-1381.5999999999999" y="1601.649175412294"/>
         </scene>
         <!--Map-->
         <scene sceneID="L9W-0N-gHo">
@@ -535,7 +534,7 @@ CQ
         </scene>
     </scenes>
     <resources>
-        <image name="DayClearSky" width="2304" height="1536"/>
+        <image name="Clouds" width="1880" height="1250"/>
         <image name="default_marker" width="26" height="41"/>
         <image name="globe" catalog="system" width="64" height="60"/>
         <image name="map" catalog="system" width="64" height="56"/>
